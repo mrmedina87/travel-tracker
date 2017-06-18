@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{modal.operation}}</h3>
+</div>
+<form novalidate class="traveltraker-form upsertTravel" ng-submit="modal.ok()">
+    <div class="modal-body">
+        <input type="text" ng-model="modal.formValues.destination" placeholder="Enter the destination" name="travelDestination"><br>
+        <textarea ng-model="modal.formValues.comment" placeholder="Enter your comments about this travel" name="travelComment"></textarea>
+        <br>
+        <span>Starting:</span>
+        <md-datepicker ng-model="modal.formValues.start" md-placeholder="Enter date"></md-datepicker>
+        <span>Finishing:</span>
+        <md-datepicker ng-model="modal.formValues.end" md-placeholder="Enter date"></md-datepicker>
+        <div class="status-msg-box">{{modal.writeResult}}</div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="OK" ng-disabled="!modal.formValues.destination || !modal.formValues.comment">
+        <button class="btn btn-warning" type="button" ng-click="modal.cancel()">Cancel</button>
+    </div>  
+</form>
