@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{modal.operation}}</h3>
+</div>
+<form novalidate class="traveltraker-form upsertUser" ng-submit="modal.ok()">
+    <div class="modal-body">
+        <input type="email" ng-model="modal.formValues.userName" placeholder="Enter an email like user" name="userEmail" ng-disabled="modal.disableName" ng-pattern="login.emailFormat"><br>
+        <input type="password" ng-model="modal.formValues.password" placeholder="Enter your password at least 12 characters" name="userPassword"><br>
+        <input type="checkbox" ng-model="modal.formValues.admin" name="userIsAdmin">
+        <span>As admin</span>
+        <div class="status-msg-box">{{modal.writeResult}}</div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" value="OK" ng-disabled="!modal.formValues.userName || modal.formValues.password.length<12">
+        <button class="btn btn-warning" type="button" ng-click="modal.cancel()">Cancel</button>
+    </div>  
+</form>

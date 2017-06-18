@@ -1,0 +1,10 @@
+<div>
+  <form novalidate class="traveltraker-form login" ng-submit="signup.signUpClick(signup.user)">
+    <input type="email" ng-model="signup.user.email" placeholder="Enter an email like user" name="userEmail" ng-pattern="signup.emailFormat"><br>
+    <input type="password" ng-model="signup.user.pass" placeholder="Enter your password, at least 12 characters" name="userPassword"><br>
+    <input type="submit" value="signup" ng-disabled="!signup.user.email || signup.user.pass.length<12">
+  </form>
+  <div class="status-msg-box">
+    {{signup.statusMsg}}
+  </div>
+</div>

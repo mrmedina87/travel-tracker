@@ -1,0 +1,37 @@
+<div>
+  <input class="logout-btn btn btn-warning" type="button" value="logout" ng-click="travelsManager.logoutClick()"><br>
+  <div class="manager-panel">
+    <button class="newTravelBtn btn btn-success" ng-click="travelsManager.openModal()">New Travel</button>
+    <input type="button" class="btn btn-primary" value="Next month travels" ng-click="travelsManager.nextMonth()">
+    <div class="filters-form">
+      <h5>Filters: </h5>
+      <form novalidate ng-submit="travelsManager.filter()">
+        <span>Starting:</span>
+        <md-datepicker ng-model="travelsManager.startFilter" md-placeholder="Enter date"></md-datepicker>
+        <span>Finishing:</span>
+        <md-datepicker ng-model="travelsManager.endFilter" md-placeholder="Enter date"></md-datepicker>
+        <input type="submit" class="btn btn-primary" value="Filter" ng-disabled="!travelsManager.startFilter && !travelsManager.endFilter">
+        <input type="button" class="btn" value="Delete Filters" ng-click="travelsManager.deleteFilters()">
+        <div class="status-msg-box">
+          {{travelsManager.filterStatus}}
+        </div>
+      </form>
+    </div>
+  </div>
+  <h4>{{travelsManager.title}}</h4>
+  <ul class="travels-list">
+    <li ng-repeat="travel in travelsManager.travelsList">
+      <span>Destination: {{travel.destination}}</span>
+      <br>
+      <span>Comments: {{travel.comment}}</span>
+      <br>
+      <span>Starts: {{travel.start | date}}</span>
+      <br>
+      <span>Ends: {{travel.end | date}}</span>
+      <br>
+      <span ng-show="travelsManager.daysCount(travel.start)" class="dayscount">Days Count: {{travelsManager.daysCount(travel.start)}}</span>
+      <button class="delete btn btn-danger" ng-click="travelsManager.delete(travel._id)">Delete</button>
+      <button class="updateTravelBtn btn btn-primary" ng-click="travelsManager.openModal(travel)">Update</button>
+    </li>
+  </ul>
+</div>

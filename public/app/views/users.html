@@ -1,0 +1,14 @@
+<div>
+  <input class="logout-btn btn-warning btn" type="button" value="logout" ng-click="usersManager.logoutClick()"><br>
+  <div class="manager-panel">
+    <button class="newUserBtn btn btn-success" ng-click="usersManager.openModal()">New User</button>
+  </div>
+  <h4>{{usersManager.title}}</h4>
+  <ul class="users-list">
+    <li ng-repeat="user in usersManager.usersList">
+      <span class="user-name">{{user.name}}</span>
+      <button class="delete btn btn-danger" ng-click="usersManager.delete(user.name)">Delete</button>
+      <button class="updateUserBtn btn btn-primary" ng-click="usersManager.openModal(user)">Update</button>
+    </li>
+  </ul>
+</div>
