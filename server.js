@@ -58,7 +58,6 @@ getToken = function (headers) {
 };
 
 apiRoutes.post('/login', function(request, response) {
-  console.log(request.body);
   User.findOne(
     {
       name: request.body.userName
@@ -200,10 +199,7 @@ apiUserRoutes.delete(
             }
             else {
               _this.deleteUserStatus = false;
-            }/*
-            console.log('check-results');
-            console.log(_this.deleteTravelsStatus);
-            console.log(_this.deleteUserStatus);  */
+            }
             //check-results
             if(_this.deleteTravelsStatus && _this.deleteUserStatus) {
               response.status(200).json({status: _this.deleteTravelsStatus + ' - ' + _this.deleteUserStatus});
