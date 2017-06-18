@@ -6,6 +6,7 @@
   "readme": "README",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": ">=1.9.2",
     "express": ">=4.9.8",
     "jwt-simple": ">=0.3.1",
