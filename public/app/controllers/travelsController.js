@@ -10,7 +10,6 @@ var TravelsController = function($location, AuthService, TravelsService, $uibMod
   _this.filterStatus = 'Filter your travels by date';
 
   if(!AuthService.isLoggedin() || AuthService.isAdmin()) {
-    alert("You should login to access to the travels view");
     $location.path('login');
   }
 
@@ -20,8 +19,9 @@ var TravelsController = function($location, AuthService, TravelsService, $uibMod
     if( start > today ) {
       return (parseInt((start - today) / 86400000)).toString();
     }
-    else
+    else {
       return false;
+    }
   };
 
   var updateTravelsList = function() {

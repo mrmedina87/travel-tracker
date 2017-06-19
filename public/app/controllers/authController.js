@@ -5,6 +5,15 @@ var AuthController = function($location, AuthService) {
   var _this = this;
   _this.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
+  AuthService.isEmpty().then(function(resp){
+    if(resp.empty) {
+      $location.path('/signup');
+    }
+  },
+  function(err) {
+    _this.statusMsg = "Something went wrong. Try later or contact an admin person."
+  });
+
   this.loginClick = function(us) {
     if(us.email && us.pass) {
       AuthService.login(us.email, us.pass).then(

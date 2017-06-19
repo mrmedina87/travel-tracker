@@ -9,7 +9,6 @@ var SignUpService = function(SignUpResource, $window) {
     };
     return SignUpResource.executeRpc(rpcConfig).$promise;
   };
-
 };
 
 angular.module(ModuleName).service('SignUpService', 
