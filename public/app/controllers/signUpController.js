@@ -10,10 +10,15 @@ var SignUpController = function($location, SignUpService) {
       SignUpService.signUp(us.email, us.pass).then(
         function(response) {
           _this.statusMsg = response.successMsg;
-          $location.path('/login');  
+          $location.path('/login');
         },
         function(error) {
-          _this.statusMsg = error.data.msg;
+          if(error.status === 409) {
+            _this.statusMsg = error.data.status;
+          }
+          else {
+            _this.statusMsg = error.data.msg;
+          }
         }
       );
     }

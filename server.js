@@ -114,9 +114,13 @@ apiRoutes.post('/signup', function(request, response) {
               var newUser = new User(userToInsert);
               newUser.save(function(err) {
                 if(err) {
-                  console.log(err);
-                  console.log(userToInsert);
-                  response.status(401).json({status: 'Something wrong while trying to create'});
+                  console.log("err.code:", err.code);
+                  if(err.code === 11000){
+                    response.status(409).json({status: 'This user already exists'});
+                  }
+                  else {
+                    response.status(401).json({status: 'Something wrong while trying to create'});
+                  }
                 }
                 else {
                   response.status(201).json({status: 'Successfully created new User'});
