@@ -1,16 +1,13 @@
-// server.js
-
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var config = require('./config/database'); // configuring the database
 
-var User = require('./app/models/user'); // getting mongoose database model for an user
-
-var Travel = require('./app/models/travel'); // getting mongoose database model for a travel
+var config = require('./config/database');
+var User = require('./app/models/user');
+var Travel = require('./app/models/travel');
 
 var port = process.env.PORT || 8080;
 var jwt = require('jwt-simple');
@@ -38,8 +35,6 @@ app.use('/api/users', apiUserRoutes);
 app.use('/api/travels', apiTravelRoutes);
 
 var mongoAccessFailed = function(err, respObj) {
-  console.log('Could not connect with mongoDB! Error data: ');
-  console.log(err);
   respObj.status(500).json({msg: 'DB - Connection error'});
   throw err;
 };
@@ -140,6 +135,7 @@ apiRoutes.post('/signup', function(request, response) {
 });
 
 // users CRUD
+
 apiUserRoutes.get(
   '/:but',
   passport.authenticate('jwt', {session: false} ),
@@ -276,6 +272,7 @@ apiUserRoutes.put(
 );
 
 // travels CRUD
+
 apiTravelRoutes.get(
   '/:start/:end',
   passport.authenticate('jwt', {session: false} ),
@@ -448,12 +445,9 @@ apiTravelRoutes.put(
   }
 );
 
-
 app.get('/*', function(request, response) {
   response.sendFile(__dirname + '/public/index.html');
 });
-
-// beginning...
 
 mongoose.connect(config.database);
 require('./config/passport')(passport);

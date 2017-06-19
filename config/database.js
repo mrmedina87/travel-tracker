@@ -1,4 +1,4 @@
 module.exports = {
-  'secret': 'toptalTravelTracker',
+  'secret': 'Vu}2!3Ep(7}]6I',
   'database': 'mongodb://localhost/travel-tracker'
 };
