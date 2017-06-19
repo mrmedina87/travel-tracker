@@ -85,6 +85,22 @@ apiRoutes.post('/login', function(request, response) {
     }
   );
 });
+apiRoutes.get('/login', function(request, response) {
+  User.count({}, function(errCount, count){
+    if(errCount) {
+      response.status(401).json({status: 'Something wrong while trying to count'});
+    }
+    else {
+      if(count === 0) {
+        response.status(201).json({empty: true});
+      }
+      else {
+        response.status(201).json({empty: false});
+      }
+    }   
+  });
+});
+
 apiRoutes.post('/signup', function(request, response) {
   User.findOne(
     {
@@ -119,7 +135,7 @@ apiRoutes.post('/signup', function(request, response) {
                     response.status(409).json({status: 'This user already exists'});
                   }
                   else {
-                    response.status(401).json({status: 'Something wrong while trying to create'});
+                    response.status(401).json({status: 'Something went wrong while trying to create'});
                   }
                 }
                 else {
@@ -229,7 +245,7 @@ apiUserRoutes.post(
       newUser.save(function(err) {
         if(err) {
           if(err.toJSON().code === 11000){
-            response.status(400).json({status: 'Duplicated'});  
+            response.status(409).json({status: 'Duplicated'});  
           }
           else {
             mongoAccessFailed(err, response);

@@ -41,6 +41,9 @@ var AuthService = function(AuthResource, $window) {
     this.setSessionData('','', false);
   };
 
+  this.isEmpty = function() {
+    return AuthResource.isEmpty().$promise;
+  };
 };
 
 angular.module(ModuleName).service('AuthService', 
