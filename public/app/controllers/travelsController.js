@@ -10,7 +10,7 @@ var TravelsController = function($location, AuthService, TravelsService, $uibMod
   _this.filterStatus = 'Filter your travels by date';
 
   if(!AuthService.isLoggedin() || AuthService.isAdmin()) {
-    alert("You should login as a non-admin user in order to access this travels-view");
+    alert("You should login to access to the travels view");
     $location.path('login');
   }
 
