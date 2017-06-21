@@ -36,3 +36,70 @@ Windows users might find problems while running npm install on their environment
 npm install --global --production windows-build-tools
 
 [Source](https://stackoverflow.com/questions/21658832/npm-install-error-msb3428-could-not-load-the-visual-c-component-vcbuild-ex)
+
+## Documentation API
+
+### USERS (always Authorization's header: jwt token)
+
+GET http://localhost:8080/api/users
+returns all users
+
+POST http://localhost:8080/api/users
+creates new user
+name: string 
+password: string
+admin: string 
+
+PUT http://localhost:8080/api/users
+updates user
+name: string 
+password: string
+admin: string 
+
+DELETE http://localhost:8080/api/users/:name
+deletes user
+name: string
+
+### TRAVELS (always Authorization's header: jwt token)
+
+GET http://localhost:8080/api/travels
+returns all travels
+
+GET http://localhost:8080/api/travels/:start/:end
+return travels filtered by dates
+start: integer (date in miliseconds)
+end: integer (date in miliseconds)
+
+POST http://localhost:8080/api/travels
+creates new travel
+comment: string 
+destination: string
+end: date 
+start: date
+
+PUT http://localhost:8080/api/travels
+updates travel
+comment: string 
+destination: string
+end: date 
+start: date
+_id: string
+
+DELETE http://localhost:8080/api/travels/:id
+deletes travel
+id: string
+
+### LOGIN AND SIGNUP
+
+GET http://localhost:8080/api/login
+returns whether is empty of users or not
+
+POST http://localhost:8080/api/login
+creates jwt token
+userName: string
+password: manano87medina
+
+POST http://localhost:8080/api/signup
+creates new user
+userName: string
+password: string

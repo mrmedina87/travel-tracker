@@ -232,7 +232,6 @@ apiUserRoutes.delete(
         );
       }
     ); 
-
   }
 );
 apiUserRoutes.post(
@@ -240,12 +239,15 @@ apiUserRoutes.post(
   passport.authenticate('jwt', {session: false} ),
   function(request, response) {
     var userToInsert = request.body;
+    if(typeof userToInsert.admin !== 'boolean') {
+      userToInsert.admin = (userToInsert.admin === 'true');
+    }
     if((typeof userToInsert.name === 'string') && (typeof userToInsert.password === 'string') && (typeof userToInsert.admin === 'boolean') ) {
       var newUser = new User(userToInsert);
       newUser.save(function(err) {
         if(err) {
           if(err.toJSON().code === 11000){
-            response.status(409).json({status: 'Duplicated'});  
+            response.status(409).json({status: 'This user already exists'});  
           }
           else {
             mongoAccessFailed(err, response);
@@ -266,6 +268,9 @@ apiUserRoutes.put(
   passport.authenticate('jwt', {session: false} ),
   function(request, response) {
     var userToUpdate = request.body;
+    if(typeof userToUpdate.admin !== 'boolean') {
+      userToUpdate.admin = (userToUpdate.admin === 'true');
+    }
     if((typeof userToUpdate.name === 'string') && (typeof userToUpdate.password === 'string') && (typeof userToUpdate.admin === 'boolean') ) {
       User.update(
         {
@@ -386,7 +391,6 @@ apiTravelRoutes.post(
   '',
   passport.authenticate('jwt', {session: false} ),
   function(request, response) {
-    console.log("insert");
     var travelToInsert = request.body;
     var currentUser = jwt.decode(getToken(request.headers), config.secret).name;
     if((typeof travelToInsert.destination === 'string') && 
@@ -436,7 +440,6 @@ apiTravelRoutes.put(
   '',
   passport.authenticate('jwt', {session: false} ),
   function(request, response) {
-    console.log("update");
     var travelToUpdate = request.body;
     if((typeof travelToUpdate.destination === 'string') && 
        (typeof travelToUpdate.comment === 'string') && 

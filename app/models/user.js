@@ -39,12 +39,27 @@ UserSchema.pre('save', function (next) {
   }
 });
 
+UserSchema.pre('update', function (next) {
+  var user = this;
+  bcrypt.genSalt(10, function (err, salt) {
+    if (err) {
+      return next(err);
+    }
+    bcrypt.hash(user._update.$set.password , salt, function (err, hash) {
+      if (err) {
+        return next(err);
+      }
+      user._update.$set.password = hash;
+      next();
+    });
+  });
+});
+
 UserSchema.methods.comparePassword = function (passw, cb) {
   bcrypt.compare(passw, this.password, function (err, isMatch) {
     if (err) {
       return cb(err);
     }
-    console.log("comparebody:", isMatch);
     cb(null, isMatch);
   });
 };
