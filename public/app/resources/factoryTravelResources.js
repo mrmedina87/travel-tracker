@@ -1,5 +1,3 @@
-'use strict';
-
 var FactoryTravelResources = function($resource, $window) {
   return function(token) {
     return $resource(

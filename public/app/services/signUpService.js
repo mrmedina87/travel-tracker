@@ -1,5 +1,3 @@
-'use strict';
-
 var SignUpService = function(SignUpResource, $window) {
 
   this.signUp = function(usr, pswrd) {

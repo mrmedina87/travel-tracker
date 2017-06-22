@@ -177,8 +177,9 @@ apiUserRoutes.get(
           }
         },
         function(err, users){
-          if(err)
+          if(err) {
             mongoAccessFailed(err, response);
+          }
           resp.usersList = users;
           response.status(200).json(resp);
         }

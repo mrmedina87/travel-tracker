@@ -152,3 +152,16 @@ input[type="checkbox"] + span {
 ul.travels-list li {
   position: relative;
 }
+
+.not-found h3 {
+  font-size: 40px;
+}
+
+.not-found p {
+  font-size: 30px;
+}
+
+.usersManagerStatus {
+    padding: 10px;
+    border: 1px solid #ccc;
+}

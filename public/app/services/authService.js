@@ -1,5 +1,3 @@
-'use strict';
-
 var AuthService = function(AuthResource, $window) {
 
   this.setSessionData = function(u, t, a) {

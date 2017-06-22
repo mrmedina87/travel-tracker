@@ -17,22 +17,26 @@ var UserSchema = new Schema({
     required: true
   }
 });
- 
-UserSchema.pre('save', function (next) {
-  var user = this;
-  if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function (err, salt) {
+
+var saveEncryptedPass = function(userObj, next) {
+  bcrypt.genSalt(10, function (err, salt) {
+    if (err) {
+      return next(err);
+    }
+    bcrypt.hash(userObj.password , salt, function (err, hash) {
       if (err) {
         return next(err);
       }
-      bcrypt.hash(user.password, salt, function (err, hash) {
-        if (err) {
-          return next(err);
-        }
-        user.password = hash;
-        next();
-      });
+      userObj.password = hash;
+      next();
     });
+  });
+}
+
+UserSchema.pre('save', function (next) {
+  var user = this;
+  if (this.isModified('password') || this.isNew) {
+    saveEncryptedPass(user, next);
   } 
   else {
     return next();
@@ -41,18 +45,7 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.pre('update', function (next) {
   var user = this;
-  bcrypt.genSalt(10, function (err, salt) {
-    if (err) {
-      return next(err);
-    }
-    bcrypt.hash(user._update.$set.password , salt, function (err, hash) {
-      if (err) {
-        return next(err);
-      }
-      user._update.$set.password = hash;
-      next();
-    });
-  });
+  saveEncryptedPass(user._update.$set, next);
 });
 
 UserSchema.methods.comparePassword = function (passw, cb) {

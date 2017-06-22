@@ -11,4 +11,7 @@
       <button class="updateUserBtn btn btn-primary" ng-click="usersManager.openModal(user)">Update</button>
     </li>
   </ul>
+  <div class="usersManagerStatus" ng-if="usersManager.status">
+    {{usersManager.status}}
+  </div>
 </div>

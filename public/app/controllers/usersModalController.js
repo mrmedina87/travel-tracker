@@ -1,69 +1,63 @@
-'use strict';
+class UsersModalController {
+  constructor($uibModalInstance, AuthService, UsersService) {
+    this.uibModalInstance = $uibModalInstance;
+    this.authService = AuthService;
+    this.usersService = UsersService;
 
-var UsersModalController = function($uibModalInstance, AuthService, UsersService) {
-  var _this = this;
-  _this.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
-  _this.userData = UsersService.getUpdatingUserData();
+    this.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+    this.userData = UsersService.getUpdatingUserData();
 
-  _this.writeResult = 'Please, enter user data';
+    this.writeResult = 'Please, enter user data';
 
-  _this.disableName = false;
-  if(_this.userData) {
-    _this.isUpdate = true;
-  }
-  else {
-    _this.userData = false;
-  }
-  _this.operation = 'Create User';
-  _this.formValues = {
-    userName: '',
-    password: '',
-    admin: false
-  };
-  if(_this.isUpdate) {
-    _this.disableName = true;
-    _this.operation = 'Update User';
-    _this.formValues.userName = _this.userData.name;
-    _this.formValues.password = _this.userData.password;
-    _this.formValues.admin = _this.userData.admin;
-  }
-  _this.cancel = function() {
-    $uibModalInstance.dismiss('cancel');
-  };
-
-  _this.ok = function() {
-    // update and create things here
-    
-    if(_this.isUpdate) {
-      UsersService.update(_this.formValues).then(
-        function(response) {
-          _this.writeResult = response.status;
-          $uibModalInstance.close(_this.writeResult);
-        },
-        function(err){
-          console.log(error.data.msg);
-        }
-      );
+    this.disableName = false;
+    if(this.userData) {
+      this.isUpdate = true;
     }
     else {
-      UsersService.insert(_this.formValues).then(
-        function(response){
-          _this.writeResult = response.status;
-          $uibModalInstance.close(_this.writeResult);
-        },
-        function(err){
-          if(err.data.status === 'Duplicated') {
-            _this.writeResult = 'That user email was already used; try other';
-          }
-        }
-      );
+      this.userData = false;
     }
-    
-  };
-  
-};
+    this.operation = 'Create User';
+    this.formValues = {
+      userName: '',
+      password: '',
+      admin: false
+    };
+    if(this.isUpdate) {
+      this.disableName = true;
+      this.operation = 'Update User';
+      this.formValues.userName = this.userData.name;
+      this.formValues.password = '';
+      this.formValues.admin = this.userData.admin;
+    }
+  }
 
-angular.module(ModuleName).controller('UsersModalController',
+  cancel() {
+    this.uibModalInstance.dismiss('cancel');
+  }
+
+  ok() {    
+    if(this.isUpdate) {
+      this.usersService.update(this.formValues).then(response => {
+        this.writeResult = response.status;
+        this.uibModalInstance.close(this.writeResult);
+      }).catch(err => {
+        this.writeResult = 'Something went wrong while trying to write' + error.data.msg;
+      });
+    }
+    else {
+      this.usersService.insert(this.formValues).then(response => {
+        this.writeResult = response.status;
+        this.uibModalInstance.close(this.writeResult);
+      }).catch(err => {
+        if(err.data.status === 'Duplicated') {
+          this.writeResult = 'That user email was already used; try other';
+        }
+      });
+    }
+  }
+}
+
+angular.module(ModuleName).controller('UsersModal',
   [
     '$uibModalInstance',
     'AuthService',

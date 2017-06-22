@@ -1,5 +1,3 @@
-'use strict';
-
 var TravelsService = function($window, FactoryTravelResources) {
   var updatingTravelData = null;
   
