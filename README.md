@@ -2,11 +2,11 @@
 
 This is a sandbox. It doesn't have commercial purposes and is used only as an example of a way of working with MEAN stack.
 
-*Travel-tracker* is a web app that you can use to track your travels and the search them by date. There are two types of users:
+*Travel-tracker* is a web app that you can use to track your travels and then search them by date. There are two types of users:
 *Admin*: can CRUD admin and non-admin users;
 *NonAdmin*: can CRUD travels;
 
-When you install Travel-tracker, it will allow you to signup (will redirect to signup page the first time); there you can create your first user (/signup will  create an admin user only the first time).
+When you install Travel-tracker, it will allow you to signup: there you can create your first user (signup page will  create an admin user only the first time).
 Then you can create your own non-admin users and start managing your travels. If you installed MongoDB and NodeJs correctly, the webapp will create the database the first time you signup.
 
 Hope you like it.
