@@ -1,5 +1,3 @@
-'use strict';
-
 var SignUpResource = function($resource) {
   return $resource(
     '/api/signup',

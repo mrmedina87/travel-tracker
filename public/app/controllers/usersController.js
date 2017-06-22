@@ -1,70 +1,65 @@
-'use strict';
+class UsersController {
+  constructor($location, AuthService,UsersService, $uibModal) {
+    this.location = $location;
+    this.authService = AuthService;
+    this.usersService = UsersService;
+    this.uibModal = $uibModal;
 
-var UsersController = function($location, AuthService,UsersService, $uibModal) {
-  var _this = this;
-  _this.usersList = [];
-  _this.title = 'Users List'
+    this.usersList = [];
+    this.title = 'Users List';
+    this.status = '';
 
-  if(!AuthService.isLoggedin() || !AuthService.isAdmin()) {
-    alert("You should login as admin in order to access this view");
-    $location.path('login');
-  } 
+    if(!this.authService.isLoggedin() || !this.authService.isAdmin()) {
+      this.location.path('login');
+    } 
 
-  var updateUsersList = function() {
-    UsersService.list().then(
-      function(response) {
-        _this.usersList = response.usersList;
-      },
-      function(error) {
-        console.log(error);
-      }
-    );
-  };
+    this.updateUsersList();
+  }
 
-  _this.delete = function(target) {
-    UsersService.delete(target).then(
-      function(response) {
-        updateUsersList();
-      },
-      function(error) {
-        console.log(error);
-      }
-    );    
-  };
+  updateUsersList() {
+    this.usersService.list().then(response => {
+      this.usersList = response.usersList;
+    }).catch(() => {
+      this.status = 'Something went wrong while trying to retrieve the users list';
+    });
+  }
 
-  _this.logoutClick = function() {
-    AuthService.logout();
-    $location.path('login');
-  };
+  delete(target) {
+    this.usersService.delete(target).then(response => {
+      this.updateUsersList();
+    }).catch(() => {
+      this.status = 'Something went wrong while trying to delete a user';
+    });    
+  }
 
-  _this.openModal = function(user) {
+  logoutClick() {
+    this.authService.logout();
+    this.location.path('login');
+  }
+
+  openModal(user) {
     if(user) {
-      UsersService.setUpdatingUserData(user);
+      this.usersService.setUpdatingUserData(user);
     }
     
-    var modalInstance = $uibModal.open({
+    var modalInstance = this.uibModal.open({
       animation: true,
       templateUrl: '/app/views/usersModal.html',
-      controller: 'UsersModalController',
+      controller: 'UsersModal',
       controllerAs: 'modal',
       size: 'small'
     });
 
-    modalInstance.result.then(
-      function(response) {
-        UsersService.setUpdatingUserData(null);
-        updateUsersList();
-      },
-      function(canceled) {
-        UsersService.setUpdatingUserData(null);
-      }
-    );
-  };
+    modalInstance.result.then(response => {
+      this.usersService.setUpdatingUserData(null);
+      this.updateUsersList();
+    }).catch(canceled => {
+      this.usersService.setUpdatingUserData(null);
+    });
+  }
+}
 
-  updateUsersList();
-};
-
-angular.module(ModuleName).controller('UsersController',
+angular.module(ModuleName).controller('Users',
   [     
     '$location',
     'AuthService',

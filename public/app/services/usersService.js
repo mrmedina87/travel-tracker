@@ -1,5 +1,3 @@
-'use strict';
-
 var UsersService = function($window, UsersResource) {
   var updatingUserData = null;
   

@@ -1,12 +1,13 @@
-'use strict';
-
-var NotFound = function($location) {
-  this.message = '404 not found - TravelTracker';
-};
+class NotFoundController {
+  constructor() {
+    this.messageHeader = 'Uh-oh, that URL is not cool!';
+    this.message = 'Error 404: Not found';
+  }
+}
 
 angular.module(ModuleName).controller('NotFound', 
   [
     '$location',
-    NotFound
+    NotFoundController
   ]
 );
