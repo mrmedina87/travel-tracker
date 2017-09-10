@@ -24,7 +24,9 @@ git clone https://github.com/mrmedina87/travel-tracker
 ### 3 - Install backend dependencies
 
 cd travel-tracker
+
 npm install
+
 node server.js
 
 (At this point, the console should say: 
@@ -33,6 +35,7 @@ Try accessing to localhost:8080)
 ### 4 - Install frontend dependencies
 
 cd public
+
 npm install
 
 ### 5 - Check if it worked
