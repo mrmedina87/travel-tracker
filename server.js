@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 var config = require('./config/database');
+var cors=require('./config/cors');
+app.use(cors.permission);
 var User = require('./app/models/user');
 var Travel = require('./app/models/travel');
 
