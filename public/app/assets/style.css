@@ -7,19 +7,23 @@ body {
 /* weird date-picker behavior fixes */
 
 .md-datepicker-calendar-pane.md-pane-open {
-    z-index: 2000 !important;
+  z-index: 2000 !important;
 }
 
 .appwriter-menu.appwriter-disabled {
-    display: none;
+  display: none;
+}
+
+.md-datepicker-input-mask {
+  display: none;
 }
 
 /* end weird date-picker behavior fixes */
 
 header.header, footer.footer {
-    background: #4c4c4c none repeat scroll 0 0;
-    color: #fff;
-    padding: 30px 0;
+  background: #4c4c4c none repeat scroll 0 0;
+  color: #fff;
+  padding: 30px 0;
 }
 
 footer.footer {
